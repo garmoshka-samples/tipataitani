@@ -2,7 +2,8 @@
 
 angular.module('myApp.news', [
   'ngRoute',
-    'myApp.images',
+  'lbServices',
+  'myApp.images',
   'ngResource', 
   'myApp.config'])
 
@@ -14,16 +15,15 @@ angular.module('myApp.news', [
 }])
 
 .controller('NewsCtrl', 
-      ['$resource', 'apiURL', 'imagesCDNRoot', '$scope', '$sce',
-function($resource, apiURL, imagesCDNRoot, $scope, $sce) {
+      ['$resource', 'imagesCDNRoot', '$scope', '$sce', 'News',
+function($resource, imagesCDNRoot, $scope, $sce, News) {
 
   var newsList = [], currentNewsIndex = 0;
 
   $scope.activeNews = [];
    
   // Load news from API:
-  var News = $resource(apiURL);
-  News.query(function(news) {
+  News.find(function(news) {
     newsList = news;
     $scope.changeNews(0);
   });
